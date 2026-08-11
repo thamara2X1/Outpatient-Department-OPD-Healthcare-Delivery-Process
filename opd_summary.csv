@@ -1,0 +1,9 @@
+Scenario,Patients,Arrival_Rate_per_hr,Doctors,Avg_Reg_Wait_min,Avg_Doctor_Wait_min,Avg_Total_Wait_min,Avg_Time_in_System_min,Reg_Utilisation_pct,Doctor_Utilisation_pct
+Base,500,15.0,3,0.42,6.52,6.95,19.54,38.0,72.9
+Load 10.0/hr,500,10.0,3,0.17,1.84,2.01,14.6,25.9,49.7
+Load 12.0/hr,500,12.0,3,0.24,3.31,3.55,16.15,30.9,59.4
+Load 17.1/hr,500,17.1,3,0.61,10.29,10.9,23.49,42.8,82.1
+Load 20.0/hr,500,20.0,3,0.98,22.5,23.48,36.07,48.0,92.2
+2 doctors,500,15.0,2,0.42,73.33,73.76,86.35,34.3,98.8
+4 doctors,500,15.0,4,0.42,1.53,1.95,14.54,38.5,55.4
+5 doctors,500,15.0,5,0.42,0.31,0.73,13.32,38.5,44.3

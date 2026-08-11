@@ -3,22 +3,6 @@ Hospital OPD Patient Queue - Discrete-Event Simulation
 =======================================================
 Two-stage tandem queue:
     Arrival -> [Registration desks] -> [Doctor consultation] -> Exit
-
-Each stage is modelled as an M/M/c FIFO queue:
-  - Arrivals follow a Poisson process (exponential inter-arrival times)
-  - Service times at each stage are exponentially distributed
-  - Each stage has c identical parallel servers, served First-In-First-Out
-
-FIFO with identical servers lets us compute exact completion times using a
-"min-heap of server free-times": each patient goes to whichever server frees
-up earliest. This is correct for M/M/c FIFO.
-
-Run with:  python opd_simulation.py
-Requires:  pip install matplotlib
-
-Outputs:   opd_dataset.csv   - per-patient records, base scenario
-           opd_summary.csv   - one row per scenario
-           graph1..graph4    - figures for the report
 """
 
 import heapq
@@ -28,7 +12,7 @@ import matplotlib
 matplotlib.use("Agg")
 import matplotlib.pyplot as plt
 
-# -------------------- BASE PARAMETERS --------------------
+# BASE PARAMETERS --------------------
 SEED               = 42     # fixes randomness -> reproducible results
 N_PATIENTS         = 500    # patients per simulation run
 MEAN_INTERARRIVAL  = 4.0    # avg minutes between arrivals (= 15 patients/hour)
@@ -36,7 +20,6 @@ N_REG_DESKS        = 2      # registration desks (c1)
 MEAN_REG_TIME      = 3.0    # avg minutes to register one patient
 N_DOCTORS          = 3      # doctors (c2)
 MEAN_CONS_TIME     = 10.0   # avg minutes per consultation
-# ---------------------------------------------------------
 
 
 def simulate(seed=SEED, n_patients=N_PATIENTS,
@@ -141,7 +124,6 @@ def save_csv(rows, path):
         w = csv.DictWriter(f, fieldnames=list(rows[0].keys()))
         w.writeheader()
         w.writerows(rows)
-
 
 # ============================================================
 #  MAIN
