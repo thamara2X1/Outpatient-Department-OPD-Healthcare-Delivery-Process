@@ -125,12 +125,12 @@ def save_csv(rows, path):
         w.writeheader()
         w.writerows(rows)
 
-# ============================================================
+
+
 #  MAIN
-# ============================================================
 if __name__ == "__main__":
 
-    summary = []      # one row per scenario, for the report's results table
+    summary = []      # starts the program and creates the summary table for all simulation scenarios.
 
     def record(label, m, arrival_per_hr, n_doc):
         summary.append({
@@ -155,8 +155,6 @@ if __name__ == "__main__":
     save_csv(base_rows, "opd_dataset.csv")
     record("Base", base_m, base_rate, N_DOCTORS)
 
-    # Graph data starts with the base point, so no scenario is duplicated
-    # in the summary table while the curves still include 15/hr and 3 doctors.
     A_load     = [base_rate]
     A_totalwait = [base_m["avg_total_wait"]]
     A_docwait   = [base_m["avg_doc_wait"]]
@@ -164,10 +162,7 @@ if __name__ == "__main__":
     B_totalwait = [base_m["avg_total_wait"]]
 
     # ---------- EXPERIMENT A: vary ARRIVAL RATE, doctors fixed at 3 ----------
-    # Load is controlled by mean_interarrival: SMALLER = patients arrive
-    # faster = higher load. (Raising n_patients does NOT raise load --
-    # it only makes the simulation run longer.)
-    # 4.0 min is omitted: that is the base scenario, already recorded above.
+    #changes the average time between patient arrivals while keeping 3 doctors fixed
     for ia in [6, 5, 3.5, 3]:
         m = metrics(simulate(mean_interarrival=ia))
         rate = 60.0 / ia
@@ -178,7 +173,7 @@ if __name__ == "__main__":
         A_docwait.append(m["avg_doc_wait"])
 
     # ---------- EXPERIMENT B: vary NUMBER OF DOCTORS, load fixed ----------
-    # 3 doctors is omitted: that is the base scenario, already recorded above.
+    # changes the number of doctors while keeping the patient arrival rate fixed.
     for c in [2, 4, 5]:
         m = metrics(simulate(n_doc=c), n_doc=c)
         show(m, f"EXP B - {c} doctors")
